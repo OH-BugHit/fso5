@@ -29,12 +29,13 @@ const renderLogin = ({ handleLogin, username, password, setUsername, setPassword
     )
 }
 
-const renderBlogs = ({ blogs, user }) => {
-    
+const renderBlogs = ({ blogs, user, handleLogOut }) => {
+
     return (
         <div>
             <h2>blogs</h2>
-            <p>{user.name} logged in</p>
+            <p>{user.name} logged in
+                <button className='logout' onClick={handleLogOut}>logout</button> </p>
             {blogs.map(blog =>
                 <Blog key={blog.id} blog={blog} />
             )}
@@ -42,11 +43,11 @@ const renderBlogs = ({ blogs, user }) => {
     )
 }
 
-const LogOrBlog = ({ handleLogin, username, password, setUsername, setPassword, user, blogs }) => {
+const LogOrBlog = ({ handleLogin, username, password, setUsername, setPassword, user, blogs, handleLogOut }) => {
     if (user === null) {
         return renderLogin({ handleLogin, username, password, setUsername, setPassword })
     } else {
-        return renderBlogs ({blogs, user})
+        return renderBlogs({ blogs, user, handleLogOut })
     }
 }
 

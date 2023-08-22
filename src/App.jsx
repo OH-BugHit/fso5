@@ -23,8 +23,14 @@ const App = () => {
     )
   }, [])
 
+  useEffect(() => {
+    const loggedUserSTRING = window.localStorage.getItem('loggedUser')
+    if (loggedUserSTRING) {
+      const user = JSON.parse(loggedUserSTRING)
+      setUser(user)
+    }
+  }, [])
  
-
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -32,6 +38,10 @@ const App = () => {
       const user = await loginService.login({
         username, password
       })
+
+      window.localStorage.setItem(
+        'loggedUser', JSON.stringify(user)
+      )
       console.log(user);
       setUser(user)
       setUsername('')
@@ -43,13 +53,16 @@ const App = () => {
           messageType: 'error'
         })
     }
+  }
 
+  const handleLogOut = () => {
+    window.localStorage.clear()
+    setUser(null)
   }
 
   return (
     <div>
       <Notification message={notifyMessage}></Notification>
-      <h2>Login</h2>
       <LogOrBlog
       handleLogin = {handleLogin}
       username = {username}
@@ -58,6 +71,7 @@ const App = () => {
       setPassword = {setPassword}
       user = {user}
       blogs = {blogs}
+      handleLogOut= {handleLogOut}
       />
     </div>
   )
