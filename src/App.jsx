@@ -10,6 +10,9 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
+  const [title, setTitle] = useState('')
+  const [author, setAuthor] = useState('')
+  const [url, setUrl] = useState('')
   const [notifyMessage, setNotifyMessage] = useState(
     {
       message: null,
@@ -18,9 +21,11 @@ const App = () => {
   )
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
+    async function getAllBlogs() {
+      const blogs = await blogService.getAll()
       setBlogs(blogs)
-    )
+    }
+    getAllBlogs()
   }, [])
 
   useEffect(() => {
@@ -30,7 +35,7 @@ const App = () => {
       setUser(user)
     }
   }, [])
- 
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
@@ -49,7 +54,7 @@ const App = () => {
     } catch (exeption) {
       DisplayMessage(setNotifyMessage,
         {
-          message: 'wrong credentials',
+          message: exeption.response.data.error,
           messageType: 'error'
         })
     }
@@ -60,18 +65,51 @@ const App = () => {
     setUser(null)
   }
 
+  const handleAddBlog = async (event) => {
+    event.preventDefault()
+
+    const newBlog = {
+      title: title,
+      author: author,
+      url: url
+    }
+
+    try {
+      const blog = await blogService.createBlog(
+        user, newBlog
+      )
+      setBlogs(blogs.concat(blog))
+      setTitle('')
+      setAuthor('')
+      setUrl('')
+    } catch (exeption) {
+      DisplayMessage(setNotifyMessage,
+        {
+          message: exeption.response.data.error,
+          messageType: 'error'
+        })
+    }
+  }
+
   return (
     <div>
       <Notification message={notifyMessage}></Notification>
       <LogOrBlog
-      handleLogin = {handleLogin}
-      username = {username}
-      password = {password}
-      setUsername = {setUsername}
-      setPassword = {setPassword}
-      user = {user}
-      blogs = {blogs}
-      handleLogOut= {handleLogOut}
+        handleLogin={handleLogin}
+        username={username}
+        password={password}
+        setUsername={setUsername}
+        setPassword={setPassword}
+        user={user}
+        blogs={blogs}
+        handleLogOut={handleLogOut}
+        handleAddBlog={handleAddBlog}
+        title={title}
+        setTitle={setTitle}
+        author={author}
+        setAuthor={setAuthor}
+        url={url}
+        setUrl={setUrl}
       />
     </div>
   )
