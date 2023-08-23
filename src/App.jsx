@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import DisplayMessage from './components/DisplayMessage'
@@ -19,6 +19,8 @@ const App = () => {
       messageType: 'success'
     }
   )
+  const createBlogRef = useRef()
+
 
   useEffect(() => {
     async function getAllBlogs() {
@@ -66,6 +68,7 @@ const App = () => {
 
   const handleAddBlog = async (event) => {
     event.preventDefault()
+    createBlogRef.current.toggleVisibility()
 
     const newBlog = {
       title: title,
@@ -114,6 +117,7 @@ const App = () => {
         setAuthor={setAuthor}
         url={url}
         setUrl={setUrl}
+        createBlogRef={createBlogRef}
       />
     </div>
   )
