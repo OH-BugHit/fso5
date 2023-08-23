@@ -1,7 +1,5 @@
 import { useState } from "react"
 
-
-
 const Blog = ({ blog }) => {
 
   const [visible, setVisible] = useState('view')

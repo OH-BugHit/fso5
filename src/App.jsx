@@ -21,7 +21,6 @@ const App = () => {
     async function getAllBlogs() {
       const blogs = await blogService.getAll()
       setBlogs(blogs)
-      console.log(blogs);
     }
     getAllBlogs()
   }, [])
@@ -60,6 +59,7 @@ const App = () => {
       const blog = await blogService.createBlog(
         user, blogObj
       )
+      blog.user = user
       setBlogs(blogs.concat(blog))
       DisplayMessage(setNotifyMessage,
         {
