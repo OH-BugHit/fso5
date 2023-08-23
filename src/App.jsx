@@ -21,6 +21,7 @@ const App = () => {
     async function getAllBlogs() {
       const blogs = await blogService.getAll()
       setBlogs(blogs)
+      console.log(blogs);
     }
     getAllBlogs()
   }, [])
@@ -33,7 +34,7 @@ const App = () => {
     }
   }, [])
 
-  const loginUser = async ({username, password}) => {
+  const loginUser = async ({ username, password }) => {
 
     try {
       const user = await loginService.login({

@@ -9,13 +9,13 @@ const renderLogin = ({ loginUser }) => {
 
     const handleLogin = (event) => {
         event.preventDefault()
-        loginUser ({
+        loginUser({
             username: username,
             password: password
-          })
+        })
 
-          setUsername('')
-          setPassword('')
+        setUsername('')
+        setPassword('')
     }
 
     return (
@@ -58,7 +58,7 @@ const renderBlogs = ({ blogs, user, setUser, createBlog, createBlogRef }) => {
             <h2>blogs</h2>
             <p>{user.name} logged in
                 <button className='logoutButton' onClick={handleLogOut}>logout</button> </p>
-            <Togglable buttonLabel='new blog' ref={createBlogRef}>
+            <Togglable buttonLabel='new blog' hiddenLabel='cancel' ref={createBlogRef}>
                 <CreateBlog
                     createBlog={createBlog}
                 />
