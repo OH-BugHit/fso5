@@ -1,4 +1,24 @@
-const CreateBlog = ({ handleAddBlog, title, author, url, setTitle, setAuthor, setUrl }) => {
+import { useState } from "react"
+
+const CreateBlog = ({ createBlog }) => {
+
+    const [title, setTitle] = useState('')
+    const [author, setAuthor] = useState('')
+    const [url, setUrl] = useState('')
+
+    const handleAddBlog = (event) => {
+        event.preventDefault()
+        createBlog ({
+            title: title,
+            author: author,
+            url: url
+          })
+
+          setTitle('')
+          setAuthor('')
+          setUrl('')
+    }
+
     return (<div>
         <h2>create new</h2>
 

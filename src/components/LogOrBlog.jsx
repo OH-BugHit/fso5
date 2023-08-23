@@ -3,6 +3,7 @@ import CreateBlog from "./CreateBlog"
 import Togglable from "./Togglable"
 
 const renderLogin = ({ handleLogin, username, password, setUsername, setPassword }) => {
+
     return (
         <div>
             <h2>Log in to application</h2>
@@ -31,7 +32,12 @@ const renderLogin = ({ handleLogin, username, password, setUsername, setPassword
     )
 }
 
-const renderBlogs = ({ blogs, user, handleLogOut, handleAddBlog, title, author, url, setTitle, setAuthor, setUrl, createBlogRef }) => {
+const renderBlogs = ({ blogs, user, setUser, createBlog, createBlogRef }) => {
+    
+    const handleLogOut = () => {
+        window.localStorage.clear()
+        setUser(null)
+    }
 
     return (
         <div>
@@ -40,13 +46,7 @@ const renderBlogs = ({ blogs, user, handleLogOut, handleAddBlog, title, author, 
                 <button className='logoutButton' onClick={handleLogOut}>logout</button> </p>
             <Togglable buttonLabel='new blog' ref={createBlogRef}>
                 <CreateBlog
-                    handleAddBlog={handleAddBlog}
-                    title={title}
-                    author={author}
-                    url={url}
-                    setTitle={setTitle}
-                    setAuthor={setAuthor}
-                    setUrl={setUrl}
+                    createBlog={createBlog}
                 />
             </Togglable>
             {blogs.map(blog =>
@@ -57,11 +57,11 @@ const renderBlogs = ({ blogs, user, handleLogOut, handleAddBlog, title, author, 
     )
 }
 
-const LogOrBlog = ({ handleLogin, username, password, setUsername, setPassword, user, blogs, handleLogOut, handleAddBlog, title, author, url, setTitle, setAuthor, setUrl, createBlogRef }) => {
+const LogOrBlog = ({ handleLogin, username, password, setUsername, setPassword, user, blogs, setUser, handleAddBlog, createBlog, createBlogRef }) => {
     if (user === null) {
         return renderLogin({ handleLogin, username, password, setUsername, setPassword })
     } else {
-        return renderBlogs({ blogs, user, handleLogOut, handleAddBlog, title, author, url, setTitle, setAuthor, setUrl, createBlogRef })
+        return renderBlogs({ blogs, user, setUser, handleAddBlog, createBlog, createBlogRef })
     }
 }
 

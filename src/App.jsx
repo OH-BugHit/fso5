@@ -10,9 +10,6 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [notifyMessage, setNotifyMessage] = useState(
     {
       message: null,
@@ -66,27 +63,16 @@ const App = () => {
     setUser(null)
   }
 
-  const handleAddBlog = async (event) => {
-    event.preventDefault()
+  const createBlog = async (blogObj) => {
     createBlogRef.current.toggleVisibility()
-
-    const newBlog = {
-      title: title,
-      author: author,
-      url: url
-    }
-
     try {
       const blog = await blogService.createBlog(
-        user, newBlog
+        user, blogObj
       )
       setBlogs(blogs.concat(blog))
-      setTitle('')
-      setAuthor('')
-      setUrl('')
       DisplayMessage(setNotifyMessage,
         {
-          message: `a new blog "${newBlog.title}" by ${newBlog.author}, added`,
+          message: `a new blog "${blogObj.title}" by ${blogObj.author}, added`,
           messageType: 'success'
         })
     } catch (exeption) {
@@ -108,15 +94,9 @@ const App = () => {
         setUsername={setUsername}
         setPassword={setPassword}
         user={user}
+        setUser={setUser}
         blogs={blogs}
-        handleLogOut={handleLogOut}
-        handleAddBlog={handleAddBlog}
-        title={title}
-        setTitle={setTitle}
-        author={author}
-        setAuthor={setAuthor}
-        url={url}
-        setUrl={setUrl}
+        createBlog={createBlog}
         createBlogRef={createBlogRef}
       />
     </div>
