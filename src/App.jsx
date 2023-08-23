@@ -7,8 +7,6 @@ import LogOrBlog from './components/LogOrBlog'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [notifyMessage, setNotifyMessage] = useState(
     {
@@ -35,8 +33,7 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
+  const loginUser = async ({username, password}) => {
 
     try {
       const user = await loginService.login({
@@ -47,8 +44,6 @@ const App = () => {
         'loggedUser', JSON.stringify(user)
       )
       setUser(user)
-      setUsername('')
-      setPassword('')
     } catch (exeption) {
       DisplayMessage(setNotifyMessage,
         {
@@ -56,11 +51,6 @@ const App = () => {
           messageType: 'error'
         })
     }
-  }
-
-  const handleLogOut = () => {
-    window.localStorage.clear()
-    setUser(null)
   }
 
   const createBlog = async (blogObj) => {
@@ -88,11 +78,7 @@ const App = () => {
     <div>
       <Notification message={notifyMessage}></Notification>
       <LogOrBlog
-        handleLogin={handleLogin}
-        username={username}
-        password={password}
-        setUsername={setUsername}
-        setPassword={setPassword}
+        loginUser={loginUser}
         user={user}
         setUser={setUser}
         blogs={blogs}

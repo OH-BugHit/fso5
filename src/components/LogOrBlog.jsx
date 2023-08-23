@@ -1,8 +1,22 @@
 import Blog from "./Blog"
 import CreateBlog from "./CreateBlog"
 import Togglable from "./Togglable"
+import { useState } from "react"
 
-const renderLogin = ({ handleLogin, username, password, setUsername, setPassword }) => {
+const renderLogin = ({ loginUser }) => {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+
+    const handleLogin = (event) => {
+        event.preventDefault()
+        loginUser ({
+            username: username,
+            password: password
+          })
+
+          setUsername('')
+          setPassword('')
+    }
 
     return (
         <div>
@@ -33,7 +47,7 @@ const renderLogin = ({ handleLogin, username, password, setUsername, setPassword
 }
 
 const renderBlogs = ({ blogs, user, setUser, createBlog, createBlogRef }) => {
-    
+
     const handleLogOut = () => {
         window.localStorage.clear()
         setUser(null)
@@ -57,9 +71,9 @@ const renderBlogs = ({ blogs, user, setUser, createBlog, createBlogRef }) => {
     )
 }
 
-const LogOrBlog = ({ handleLogin, username, password, setUsername, setPassword, user, blogs, setUser, handleAddBlog, createBlog, createBlogRef }) => {
+const LogOrBlog = ({ loginUser, user, blogs, setUser, handleAddBlog, createBlog, createBlogRef }) => {
     if (user === null) {
-        return renderLogin({ handleLogin, username, password, setUsername, setPassword })
+        return renderLogin({ loginUser })
     } else {
         return renderBlogs({ blogs, user, setUser, handleAddBlog, createBlog, createBlogRef })
     }
