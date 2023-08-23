@@ -47,7 +47,6 @@ const App = () => {
       window.localStorage.setItem(
         'loggedUser', JSON.stringify(user)
       )
-      console.log(user);
       setUser(user)
       setUsername('')
       setPassword('')
@@ -82,6 +81,11 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setUrl('')
+      DisplayMessage(setNotifyMessage,
+        {
+          message: `a new blog "${newBlog.title}" by ${newBlog.author}, added`,
+          messageType: 'success'
+        })
     } catch (exeption) {
       DisplayMessage(setNotifyMessage,
         {

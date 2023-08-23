@@ -1,0 +1,39 @@
+.puhelinluettelo {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.logoutButton {
+    margin-left: 3px;
+}
+
+.createButton {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+input {
+    margin-left: 3px;
+    margin-bottom: 3px;
+}
+
+.success {
+    color: green;
+    background: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.error {
+    color: red;
+    background: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}

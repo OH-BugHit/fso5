@@ -36,7 +36,7 @@ const renderBlogs = ({ blogs, user, handleLogOut, handleAddBlog, title, author, 
         <div>
             <h2>blogs</h2>
             <p>{user.name} logged in
-                <button className='logout' onClick={handleLogOut}>logout</button> </p>
+                <button className='logoutButton' onClick={handleLogOut}>logout</button> </p>
             <CreateBlog
                 handleAddBlog={handleAddBlog}
                 title={title}

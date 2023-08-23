@@ -29,7 +29,7 @@ const CreateBlog = ({ handleAddBlog, title, author, url, setTitle, setAuthor, se
                 />
             </div>
             <div>
-                <button type='submit'>create</button>
+                <button className='createButton' type='submit'>create</button>
             </div>
         </form>
     </div>
