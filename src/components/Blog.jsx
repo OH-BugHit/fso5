@@ -1,6 +1,7 @@
-import { useState } from "react"
+import { useState } from 'react'
 import blogService from '../services/blogs'
-import DisplayMessage from "./DisplayMessage"
+import DisplayMessage from './DisplayMessage'
+
 const Blog = ({ blog, user, setNotifyMessage, updateBlogsAfterRemove }) => {
   const [visible, setVisible] = useState('view')
   const [likes, setLikes] = useState(blog.likes)
@@ -55,18 +56,10 @@ const Blog = ({ blog, user, setNotifyMessage, updateBlogsAfterRemove }) => {
           })
       } catch (exeption) {
         if (exeption) {
-          console.log(exeption);
           DisplayMessage(setNotifyMessage,
             {
               message: exeption.message,
               messageType: 'error'
-            })
-        } else {
-          updateBlogsAfterRemove(blog)
-          DisplayMessage(setNotifyMessage,
-            {
-              message: `${blog.title} removed`,
-              messageType: 'success'
             })
         }
       }

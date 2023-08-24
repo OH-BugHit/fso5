@@ -15,7 +15,8 @@ li {
 .removeBlog {
     margin-top: 4px;
     margin-bottom: 4px;
-    background-color: aquamarine;
+    border-radius: 4px;
+    background-color: white;
     color: rebeccapurple;
     border-color: red;
 }

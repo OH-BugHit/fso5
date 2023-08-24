@@ -43,11 +43,19 @@ const App = () => {
       )
       setUser(user)
     } catch (exeption) {
-      DisplayMessage(setNotifyMessage,
-        {
-          message: exeption.response.data.error,
-          messageType: 'error'
-        })
+      if (exeption.response !== undefined) {
+        DisplayMessage(setNotifyMessage,
+          {
+            message: exeption.response.data.error,
+            messageType: 'error'
+          })
+      } else {
+        DisplayMessage(setNotifyMessage,
+          {
+            message: exeption.message,
+            messageType: 'error'
+          })
+      }
     }
   }
 
