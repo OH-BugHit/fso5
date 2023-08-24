@@ -53,6 +53,8 @@ const renderBlogs = ({ blogs, user, setUser, createBlog, createBlogRef }) => {
         setUser(null)
     }
 
+    blogs.sort((a,b) => b.likes - a.likes)
+
     return (
         <div>
             <h2>blogs</h2>
