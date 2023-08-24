@@ -64,7 +64,8 @@ const renderBlogs = ({ blogs, user, setUser, createBlog, createBlogRef }) => {
                 />
             </Togglable>
             {blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} />
+                <Blog key={blog.id} blog={blog} user={user}
+                />
             )}
 
         </div>
