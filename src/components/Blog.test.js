@@ -64,3 +64,43 @@ describe('Show/Hide blog info', () => {
     expect(userName).toBeDefined()
   })
 })
+describe('Like-button test', () => {
+  test('handler gets called twice if button pressed twice', async () => {
+    const blog = {
+      title: 'Testiotsikko',
+      author: 'Olli',
+      likes: 5,
+      url: 'www.rrr.eee',
+      user: { name: 'mockName' }
+    }
+
+    const mockHandler = jest.fn()
+    const mockHandleButton = null
+    const mockVisible = null
+    const mockRemoveButton = () => null
+
+    const container = render(
+      <div>
+        {blog.title} {blog.author}
+        <button onClick={mockHandleButton}>{mockVisible}</button>
+        {<div>
+          {blog.url}
+          <br />
+          likes: {blog.likes}
+          <button onClick={mockHandler}>like</button>
+          <br />
+          {blog.user.name}
+          <br />
+          {mockRemoveButton()}
+        </div>}
+      </div>
+    )
+
+    const user = userEvent.setup()
+
+    const button = screen.getByText('like')
+    await user.click(button)
+    await user.click(button)
+    expect(mockHandler.mock.calls).toHaveLength(2)
+  })
+})
