@@ -26,8 +26,6 @@ const addLike = async (user, blog) => {
   const headers = {
     headers: { Authorization: token }
   }
-
-  console.log("blogi on", blog);
   const updateBlog = {
     user: blog.user.id,
     likes: blog.likes,
@@ -35,13 +33,23 @@ const addLike = async (user, blog) => {
     title: blog.title,
     url: blog.url
   }
-  console.log("vanha: ", blog, "uusi", updateBlog);
   const response = await axios.put(`${baseUrl}/${blog.id}`, updateBlog, headers)
   return response.data
+}
+
+const deleteBlog = async (user, blog) => {
+  setToken(user.token)
+  const headers = {
+    headers: { Authorization: token }
+  }
+  const response = await axios.delete(`${baseUrl}/${blog.id}`, headers)
+  if (!response === null) { return response.data }
+  return null
 }
 
 export default {
   getAll,
   createBlog,
-  addLike
+  addLike,
+  deleteBlog
 }

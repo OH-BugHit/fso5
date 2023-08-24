@@ -1,8 +1,7 @@
 import { useState } from "react"
 import blogService from '../services/blogs'
-
-const Blog = ({ blog, user }) => {
-
+import DisplayMessage from "./DisplayMessage"
+const Blog = ({ blog, user, setNotifyMessage, updateBlogsAfterRemove }) => {
   const [visible, setVisible] = useState('view')
   const [likes, setLikes] = useState(blog.likes)
 
@@ -14,10 +13,66 @@ const Blog = ({ blog, user }) => {
     }
   }
 
-  const handleLikeButton = () => {
-    setLikes(likes + 1)
+  const handleLikeButton = async () => {
     blog.likes++
-    blogService.addLike(user, blog)
+    try {
+      await blogService.addLike(user, blog)
+      setLikes(likes + 1)
+      DisplayMessage(setNotifyMessage,
+        {
+          message: 'Like added',
+          messageType: 'success',
+          length: 2000
+        })
+    } catch (exeption) {
+      DisplayMessage(setNotifyMessage,
+        {
+          message: exeption.response.data.error,
+          messageType: 'error'
+        })
+    }
+  }
+
+  const removeButton = () => {
+    if (blog.user.username === user.username) {
+      return (
+        <button className='removeBlog' onClick={handleRemove}>remove</button>
+      )
+    } else {
+      return null
+    }
+  }
+
+  const handleRemove = async () => {
+    if (window.confirm(`Remove blog '${blog.title}' by ${blog.author}`)) {
+      try {
+        await blogService.deleteBlog(user, blog)
+        updateBlogsAfterRemove(blog)
+        DisplayMessage(setNotifyMessage,
+          {
+            message: `'${blog.title}' removed`,
+            messageType: 'success'
+          })
+      } catch (exeption) {
+        if (exeption) {
+          console.log(exeption);
+          DisplayMessage(setNotifyMessage,
+            {
+              message: exeption.message,
+              messageType: 'error'
+            })
+        } else {
+          updateBlogsAfterRemove(blog)
+          DisplayMessage(setNotifyMessage,
+            {
+              message: `${blog.title} removed`,
+              messageType: 'success'
+            })
+        }
+      }
+    } else {
+      return null
+    }
   }
 
   const additionalInfo = (blog) => {
@@ -30,6 +85,8 @@ const Blog = ({ blog, user }) => {
           <button onClick={handleLikeButton}>like</button>
           <br />
           {blog.user.name}
+          <br />
+          {removeButton()}
         </div>
       )
     }

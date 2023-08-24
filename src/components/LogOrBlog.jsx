@@ -3,6 +3,14 @@ import CreateBlog from "./CreateBlog"
 import Togglable from "./Togglable"
 import { useState } from "react"
 
+const LogOrBlog = ({ loginUser, user, blogs, setUser, handleAddBlog, createBlog, createBlogRef, setNotifyMessage, updateBlogsAfterRemove }) => {
+    if (user === null) {
+        return renderLogin({ loginUser })
+    } else {
+        return renderBlogs({ blogs, user, setUser, handleAddBlog, createBlog, createBlogRef, setNotifyMessage, updateBlogsAfterRemove })
+    }
+}
+
 const renderLogin = ({ loginUser }) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -13,7 +21,6 @@ const renderLogin = ({ loginUser }) => {
             username: username,
             password: password
         })
-
         setUsername('')
         setPassword('')
     }
@@ -46,14 +53,13 @@ const renderLogin = ({ loginUser }) => {
     )
 }
 
-const renderBlogs = ({ blogs, user, setUser, createBlog, createBlogRef }) => {
-
+const renderBlogs = ({ blogs, user, setUser, createBlog, createBlogRef, setNotifyMessage, updateBlogsAfterRemove }) => {
     const handleLogOut = () => {
         window.localStorage.clear()
         setUser(null)
     }
-
-    blogs.sort((a,b) => b.likes - a.likes)
+    //Järjestetään likejen mukaan ennen renderöintiä
+    blogs.sort((a, b) => b.likes - a.likes)
 
     return (
         <div>
@@ -66,20 +72,15 @@ const renderBlogs = ({ blogs, user, setUser, createBlog, createBlogRef }) => {
                 />
             </Togglable>
             {blogs.map(blog =>
-                <Blog key={blog.id} blog={blog} user={user}
+                <Blog key={blog.id}
+                    blog={blog}
+                    user={user}
+                    setNotifyMessage={setNotifyMessage}
+                    updateBlogsAfterRemove={updateBlogsAfterRemove}
                 />
             )}
-
         </div>
     )
-}
-
-const LogOrBlog = ({ loginUser, user, blogs, setUser, handleAddBlog, createBlog, createBlogRef }) => {
-    if (user === null) {
-        return renderLogin({ loginUser })
-    } else {
-        return renderBlogs({ blogs, user, setUser, handleAddBlog, createBlog, createBlogRef })
-    }
 }
 
 export default LogOrBlog

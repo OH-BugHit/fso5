@@ -12,6 +12,14 @@ li {
     margin-left: 3px;
 }
 
+.removeBlog {
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background-color: aquamarine;
+    color: rebeccapurple;
+    border-color: red;
+}
+
 button {
     margin: 1px;
     margin-left: 3px;

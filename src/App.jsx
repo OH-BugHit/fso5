@@ -16,7 +16,6 @@ const App = () => {
   )
   const createBlogRef = useRef()
 
-
   useEffect(() => {
     async function getAllBlogs() {
       const blogs = await blogService.getAll()
@@ -34,7 +33,6 @@ const App = () => {
   }, [])
 
   const loginUser = async ({ username, password }) => {
-
     try {
       const user = await loginService.login({
         username, password
@@ -75,6 +73,11 @@ const App = () => {
     }
   }
 
+  const updateBlogsAfterRemove = (blog) => {
+    const newBlogs = blogs.filter(e => e !== blog)
+    setBlogs(newBlogs)
+  }
+
   return (
     <div>
       <Notification message={notifyMessage}></Notification>
@@ -85,6 +88,8 @@ const App = () => {
         blogs={blogs}
         createBlog={createBlog}
         createBlogRef={createBlogRef}
+        setNotifyMessage={setNotifyMessage}
+        updateBlogsAfterRemove={updateBlogsAfterRemove}
       />
     </div>
   )
