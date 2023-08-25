@@ -90,7 +90,7 @@ const Blog = ({ blog, user, setNotifyMessage, updateBlogsAfterRemove }) => {
     <li>
       <div>
         {blog.title} {blog.author}
-        <button onClick={handleButton}>{visible}</button>
+        <button onClick={handleButton} name={'view_Hide'} >{visible}</button>
         {additionalInfo(blog)}
       </div>
     </li>
