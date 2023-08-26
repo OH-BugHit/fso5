@@ -51,15 +51,23 @@ describe('Blog app', () => {
 
       describe('When blog created', function () {
         beforeEach(function () {
-          cy.postBlog({ title: 'TitleTest', author: 'AuthorTest', url: 'BlogTest'})
+          cy.postBlog({ title: 'TitleTest', author: 'AuthorTest', url: 'BlogTest' })
         })
+
         it('blog can be liked', function () {
           cy.get('.blogItem').contains('view').click()
           cy.get('.blogItem').contains('likes: 0')
           cy.get('.blogItem').contains('like').click()
           cy.get('.blogItem').contains('likes: 1')
         })
-    })
+        
+        it('blog can be removed', function() {
+          cy.get('.blogItem').contains('view').click()
+          cy.get('.removeBlog').click()
+          cy.get('.success').contains('\'TitleTest\' removed')
+          cy.get('html').should('not.contain', '.blogItem')
+        })
+      })
     })
   })
 })
