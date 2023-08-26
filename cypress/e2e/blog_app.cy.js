@@ -48,6 +48,18 @@ describe('Blog app', () => {
         cy.get('.success').contains('a new blog "Blogin title" by Blogin author, added')
         cy.contains('Blogin title Blogin author')
       })
+
+      describe('When blog created', function () {
+        beforeEach(function () {
+          cy.postBlog({ title: 'TitleTest', author: 'AuthorTest', url: 'BlogTest'})
+        })
+        it('blog can be liked', function () {
+          cy.get('.blogItem').contains('view').click()
+          cy.get('.blogItem').contains('likes: 0')
+          cy.get('.blogItem').contains('like').click()
+          cy.get('.blogItem').contains('likes: 1')
+        })
+    })
     })
   })
 })
