@@ -60,12 +60,27 @@ describe('Blog app', () => {
           cy.get('.blogItem').contains('like').click()
           cy.get('.blogItem').contains('likes: 1')
         })
-        
-        it('blog can be removed', function() {
+
+        it('blog can be removed', function () {
           cy.get('.blogItem').contains('view').click()
           cy.get('.removeBlog').click()
           cy.get('.success').contains('\'TitleTest\' removed')
           cy.get('html').should('not.contain', '.blogItem')
+        })
+
+        it('remove button cannot be seen by another user', function () {
+          cy.get('.logoutButton').click()
+          const user = {
+            "username": "tester2",
+            "name": "Olli Testaa2",
+            "password": "SADFr323w4"
+          }
+          cy.request('POST', `${Cypress.env('BACKEND')}/users`, user)
+          cy.get('input[name="Username"').type('tester2')
+          cy.get('input[name="Password"').type('SADFr323w4')
+          cy.contains('login').click()
+          cy.get('.blogItem').contains('view').click()
+          cy.get('.blogItem').should('not.contain', '.removeBlog')
         })
       })
     })
